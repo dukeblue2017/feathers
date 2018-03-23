@@ -17,6 +17,8 @@
   },
   "homepage": "https://github.com/dukeblue2017/feathers#readme",
   "dependencies": {
+    "body-parser": "^1.18.2",
+    "cors": "^2.8.4",
     "eslint": "^4.19.1",
     "eslint-config-airbnb": "^16.1.0",
     "eslint-plugin-import": "^2.9.0",
