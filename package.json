@@ -1,0 +1,19 @@
+{
+  "name": "feathers",
+  "version": "1.0.0",
+  "description": "A real time chat app",
+  "main": "server/index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/dukeblue2017/feathers.git"
+  },
+  "author": "Carter Duncan",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/dukeblue2017/feathers/issues"
+  },
+  "homepage": "https://github.com/dukeblue2017/feathers#readme"
+}
