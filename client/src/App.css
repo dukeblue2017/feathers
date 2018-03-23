@@ -10,12 +10,11 @@ body {
 .login {
   margin: auto;
   margin-top: 30%;
+  padding: 1em;
   width: 40%;
   min-width: 200px;
   max-width: 400px;
-  border: 1px solid black;
-  border-radius: 1em;
-  background-color: lightblue;
+  background-color: lightgreen;
 }
 
 .login label {

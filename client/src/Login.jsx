@@ -30,8 +30,13 @@ class Login extends Component {
 
   handleSubmit(e) {
     e.preventDefault();
-    axios.post({
-      
+    axios.post('http://127.0.0.1/login', {
+      username: this.state.username,
+      password: this.state.password,
+    }).then((response) => {
+      console.log(response)
+    }).catch((err) => {
+      console.log(err)
     })
   }
 
