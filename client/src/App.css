@@ -1,3 +1,28 @@
+body {
+  width: 100vw;
+  height: 100vh;
+}
+
 .App {
   text-align: center;
+}
+
+.login {
+  margin: auto;
+  margin-top: 30%;
+  width: 40%;
+  min-width: 200px;
+  max-width: 400px;
+  border: 1px solid black;
+  border-radius: 1em;
+  background-color: lightblue;
+}
+
+.login label {
+  display: block;
+}
+
+.login * {
+  margin: 1em;
+  vertical-align: middle;
 }
