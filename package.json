@@ -15,5 +15,9 @@
   "bugs": {
     "url": "https://github.com/dukeblue2017/feathers/issues"
   },
-  "homepage": "https://github.com/dukeblue2017/feathers#readme"
+  "homepage": "https://github.com/dukeblue2017/feathers#readme",
+  "dependencies": {
+    "eslint": "^4.19.1",
+    "eslint-config-airbnb": "^16.1.0"
+  }
 }
