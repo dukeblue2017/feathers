@@ -34,10 +34,10 @@ class Login extends Component {
       username: this.state.username,
       password: this.state.password,
     }).then((response) => {
-      console.log(response)
+      console.log(response);
     }).catch((err) => {
-      console.log(err)
-    })
+      console.log(err);
+    });
   }
 
 
