@@ -14,12 +14,17 @@ const knex = require('knex')({
 
 const db = {};
 
-db.addUser = () => {
+db.addUser = (userObj) => {
+  // allowing duplicate usernames right now
   return knex('users').insert({
-    username: 'test',
-    hash: 'asdfas',
-    id: '8',
+    username: userObj.username,
+    hash: userObj.hash,
+    id: Math.floor(Math.random() * 100000000),
   });
+};
+
+db.fetchHash = (username) => {
+  return knex('users').select('hash').where({ username });
 };
 
 module.exports = db;
