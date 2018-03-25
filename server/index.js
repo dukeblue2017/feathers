@@ -5,6 +5,8 @@ const bodyParser = require('body-parser');
 const path = require('path');
 const cookieParser = require('cookie-parser');
 const sessions = {}; // not for use in production
+const bcrypt = require('bcrypt');
+const db = require('./db.js');
 
 app.listen(8000, () => console.log('Server running on port 8000'));
 
@@ -44,7 +46,7 @@ app.post('/login', (req, res) => {
       newID = newID.concat(alphanumerics[random]);
     } sessions[userSubmission.username] = newID;
     res.cookie('sessID', newID);
-    res.cookie('username', userSubmission.username).redirect('/')
+    res.cookie('username', userSubmission.username).redirect('/');
   } else {
     res.status(401).send('Incorrect credentials.');
   }
@@ -52,6 +54,21 @@ app.post('/login', (req, res) => {
 
 app.get('/signup', (req, res) => {
   res.sendFile(path.join(__dirname, '/static/signup.html'));
+});
+
+app.post('/signup', (req, res) => {
+  const userSubmission = {
+    username: req.body.username,
+    password: req.body.password,
+  };
+  db.addUser()
+    .then((success) => {
+      console.log('success', success);
+    })
+    .catch((err) => {
+      console.log('err', err);
+    });
+  res.end();
 });
 
 app.use((req, res, next) => {
