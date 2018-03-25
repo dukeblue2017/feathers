@@ -1,15 +1,16 @@
 const express = require('express');
-const app = express();
 const cors = require('cors');
 const bodyParser = require('body-parser');
 const path = require('path');
 const cookieParser = require('cookie-parser');
-const sessions = {}; // not for use in production
 const bcrypt = require('bcrypt');
 const db = require('./db.js');
 const dotenv = require('dotenv').config({
   path: 'env.env',
 });
+
+const app = express();
+const sessions = {}; // not for use in production
 
 app.listen(8000, () => console.log('Server running on port 8000'));
 
@@ -69,7 +70,7 @@ app.post('/login', (req, res) => {
         }
       })
       .catch((err) => {
-        console.log('err', err);
+        console.log('Error fetching hash', err);
       });
   }
 });
@@ -87,17 +88,24 @@ app.post('/signup', (req, res) => {
       };
       db.addUser(userObj)
         .then((success) => {
-          console.log('success', success);
+          const alphanumerics = 'abcdefghijklmnopqrstuvwxyz0123456789'.split('');
+          let newID = '';
+          for (let i = 0; i < 30; i += 1) {
+            const random = Math.floor(Math.random() * 35.9999999);
+            newID = newID.concat(alphanumerics[random]);
+          } sessions[userObj.username] = newID;
+          res.cookie('sessID', newID);
+          res.cookie('username', userObj.username).redirect('/');
         })
         .catch((err) => {
-          console.log('err', err);
+          console.log('error in adding user to DB', err);
+          res.redirect('/');
         });
-      res.redirect('/');
     })
     .catch((err) => {
-      console.log('err in post to /signup:', err)
+      console.log('err in post to /signup:', err);
       res.sendStatus(500);
-    })
+    });
 });
 
 app.use((req, res, next) => {
@@ -110,4 +118,4 @@ app.use((req, res, next) => {
   }
 });
 
-app.use(express.static(path.join(__dirname, '../client/build')))
+app.use(express.static(path.join(__dirname, '../client/build')));
