@@ -20,7 +20,7 @@ app.use(cookieParser());
 
 app.get('/', (req, res) => {
   if (req.cookies.sessID && sessions[req.cookies.username] === req.cookies.sessID) {
-    res.sendFile(path.join(__dirname, '../client/build/index.html'));
+    res.redirect('/index.html');
   } else {
     res.redirect('/login');
   }
@@ -106,6 +106,8 @@ app.use((req, res, next) => {
   } else {
     res.clearCookie('username');
     res.clearCookie('sessID');
-    res.redirect('/')
+    res.redirect('/');
   }
 });
+
+app.use(express.static(path.join(__dirname, '../client/build')))
