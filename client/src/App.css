@@ -88,3 +88,13 @@
   grid-row: 3;
   grid-column: 2;
 }
+
+.chat-input * {
+  margin: 5px;
+  vertical-align: middle;
+}
+
+.chat-input textarea {
+  width: 50%;
+  height: 3em;
+}

@@ -135,8 +135,8 @@ app.use(express.static(path.join(__dirname, '../client/build')));
 
 app.post('/message', (req, res) => {
   pusher.trigger('message-channel', 'message-event', {
-    message: 'Hi, everyoneasdfasddsfasfffdsafdsa!',
-    senderUsername: 'Carter'
+    message: req.body.message,
+    senderUsername: req.cookies.username,
   });
   res.end()
 });

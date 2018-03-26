@@ -3,6 +3,7 @@ import Pusher from 'pusher-js';
 import axios from 'axios';
 import UserList from './UserList';
 import ChatBox from './ChatBox';
+import ChatInput from './ChatInput';
 import './App.css';
 
 class App extends Component {
@@ -74,7 +75,7 @@ class App extends Component {
         </div>
         <UserList usersOnline={this.state.usersOnline} />
         <ChatBox messages={this.state.messages}/>
-        <div className="chat-input"></div>
+        <ChatInput />
       </div>
     );
   }
