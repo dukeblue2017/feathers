@@ -25,3 +25,26 @@ body {
   margin: 1em;
   vertical-align: middle;
 }
+
+.top-bar {
+  height: 10vh;
+  background-color: lightblue;
+  font-size: 2em;
+}
+
+.user-list, .chat-box {
+  display: inline-block;
+  height: 90vh;
+}
+
+.user-list {
+  width: 25%;
+  background-color: lightgreen;
+  font-size: 2em;
+}
+
+.chat-box {
+  width: 75%;
+  background-color: lightgray;
+  font-size: 2em;
+}

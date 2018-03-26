@@ -8,6 +8,19 @@ const db = require('./db.js');
 const dotenv = require('dotenv').config({
   path: 'env.env',
 });
+const Pusher = require('pusher');
+
+const pusher = new Pusher({
+  appId: '497277',
+  key: 'e9b17ff5257c689f876c',
+  secret: '0c6c0742f63c017fc429',
+  cluster: 'us2',
+  encrypted: true,
+})
+
+// pusher.trigger('my-channel', 'my-event', {
+//   message: 'hello world',
+// });
 
 const app = express();
 const sessions = {}; // not for use in production
@@ -119,3 +132,10 @@ app.use((req, res, next) => {
 });
 
 app.use(express.static(path.join(__dirname, '../client/build')));
+
+app.post('/message', (req, res) => {
+  console.log('req', req);
+  pusher.trigger('carter-channel', 'carter-event', {
+    message: 'carter message',
+  });
+});
