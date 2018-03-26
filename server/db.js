@@ -28,11 +28,11 @@ db.fetchHash = (username) => {
 };
 
 db.fetchMessages = () => {
-  return knex('messages').select().orderBy('date');
+  return knex('ChatLog').select().orderBy('date');
 };
 
 db.saveMessage = (messageObj) => {
-  return knex('messages').insert({
+  return knex('ChatLog').insert({
     message: messageObj.message,
     username: messageObj.username
   });
