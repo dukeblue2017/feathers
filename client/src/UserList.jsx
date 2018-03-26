@@ -1,6 +1,4 @@
 import React, { Component } from 'react';
-import Pusher from 'pusher-js';
-// import axios from 'axios';
 
 class UserList extends Component {
   constructor(props) {
@@ -10,7 +8,9 @@ class UserList extends Component {
   render() {
     return (
       <div className="user-list">
-      {[<div>User1</div>,<div>User2</div>,<div>User3</div>]}
+        {this.props.usersOnline.map((username, index) => {
+          return <div key={index}>{username}</div>
+        })}
       </div>
     );
   }

@@ -16,11 +16,7 @@ const pusher = new Pusher({
   secret: '0c6c0742f63c017fc429',
   cluster: 'us2',
   encrypted: true,
-})
-
-// pusher.trigger('my-channel', 'my-event', {
-//   message: 'hello world',
-// });
+});
 
 const app = express();
 const sessions = {}; // not for use in production

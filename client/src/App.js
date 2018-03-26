@@ -10,6 +10,7 @@ class App extends Component {
     super(props);
     this.state = {
       messages: [],
+      usersOnline: ['carter', 'user2', 'user3'],
     };
     // Pusher.logToConsole = true;
     const pusher = new Pusher('e9b17ff5257c689f876c', {
@@ -48,8 +49,8 @@ class App extends Component {
         <div className="top-bar">Feathers Chat
           <button onClick={this.handleClick}>handleClick</button>
         </div>
-        <UserList />
-        <ChatBox />
+        <UserList usersOnline={this.state.usersOnline}/>
+        <ChatBox messages={this.state.messages}/>
       </div>
     );
   }
