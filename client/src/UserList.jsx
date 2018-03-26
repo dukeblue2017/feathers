@@ -12,7 +12,7 @@ class UserList extends Component {
           <div className="green-number">{this.props.usersOnline.length}</div>
           users
         </div>
-        {this.props.usersOnline.map((username, index) => {
+        {Array.isArray(this.props.usersOnline) && this.props.usersOnline.map((username, index) => {
           return <div className="user-list-entry" key={index}>{username}</div>
         })}
       </div>

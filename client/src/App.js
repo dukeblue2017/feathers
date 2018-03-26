@@ -12,25 +12,29 @@ class App extends Component {
       messages: [],
       usersOnline: [],
     };
-    // Pusher.logToConsole = true;
-    const pusher = new Pusher('e9b17ff5257c689f876c', {
-      cluster: 'us2',
-      encrypted: true
-    });
-
-    const channel = pusher.subscribe('message-channel');
-    const that = this;
-    channel.bind('message-event', function(data) {
-      that.setState({
-        messages: that.state.messages.concat(data),
-      })
-    });
     this.fetchUsers = this.fetchUsers.bind(this);
     this.fetchMessages = this.fetchMessages.bind(this);
     this.onClick = this.onClick.bind(this);
   }
 
   componentDidMount() {
+    const pusher = new Pusher('e9b17ff5257c689f876c', {
+      cluster: 'us2',
+      encrypted: true
+    });
+    const channel = pusher.subscribe('message-channel');
+    channel.bind('message-event', (data) => {
+      this.setState({
+        messages: this.state.messages.concat(data),
+      })
+    });
+    const channelTwo = pusher.subscribe('user-channel');
+    channelTwo.bind('user-event', (data) => {
+      console.log('data', data)
+      this.setState({
+        usersOnline: this.state.usersOnline.concat(data.userNowOnline),
+      })
+    });
     this.fetchUsers();
   }
 
@@ -52,7 +56,6 @@ class App extends Component {
     axios.get('http://localhost:8000/users')
       .then((res) => {
         if (res.data) {
-          console.log(res.data, this)
           this.setState({
             usersOnline: res.data,
           });
@@ -71,6 +74,7 @@ class App extends Component {
         </div>
         <UserList usersOnline={this.state.usersOnline} />
         <ChatBox messages={this.state.messages}/>
+        <div className="chat-input"></div>
       </div>
     );
   }

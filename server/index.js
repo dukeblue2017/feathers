@@ -31,6 +31,9 @@ app.use(cookieParser());
 app.get('/', (req, res) => {
   if (req.cookies.sessID && sessions[req.cookies.username] === req.cookies.sessID) {
     res.redirect('/index.html');
+    pusher.trigger('user-channel', 'user-event', {
+      userNowOnline: req.cookies.username,
+  });
   } else {
     res.redirect('/login');
   }

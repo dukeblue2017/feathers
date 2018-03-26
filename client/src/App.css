@@ -1,7 +1,7 @@
 .App {
   text-align: center;
   display: grid;
-  grid-template-rows: 1fr 8fr;
+  grid-template-rows: 1fr 10fr 1fr;
   grid-template-columns: 2fr 5fr;
   width: 100vw;
   height: 100vh;
@@ -37,7 +37,7 @@
 
 .user-list {
   font-size: 2em;
-  grid-row: 2;
+  grid-row: 2/4;
   grid-column: 1;
   border-right: 1px solid lightgrey;
 }
@@ -82,4 +82,9 @@
 
 .message .message-username {
   font-size: .7em;
+}
+
+.chat-input {
+  grid-row: 3;
+  grid-column: 2;
 }
