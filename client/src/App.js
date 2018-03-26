@@ -10,7 +10,7 @@ class App extends Component {
     super(props);
     this.state = {
       messages: [],
-      usersOnline: ['carter', 'user2', 'user3'],
+      usersOnline: [],
     };
     // Pusher.logToConsole = true;
     const pusher = new Pusher('e9b17ff5257c689f876c', {
@@ -21,22 +21,42 @@ class App extends Component {
     const channel = pusher.subscribe('message-channel');
     const that = this;
     channel.bind('message-event', function(data) {
-      console.log(data);
       that.setState({
         messages: that.state.messages.concat(data),
       })
     });
-    this.handleClick = this.handleClick.bind(this);
+    this.fetchUsers = this.fetchUsers.bind(this);
+    this.fetchMessages = this.fetchMessages.bind(this);
+    this.onClick = this.onClick.bind(this);
   }
 
-  componentDidUpdate() {
-    console.log('this.state', this.state)
+  componentDidMount() {
+    this.fetchUsers();
   }
 
-  handleClick() {
-    axios.post('http://localhost:8000/message')
+
+  onClick() {
+  }
+
+  fetchMessages() {
+    axios.post('http://localhost:8000/messages')
       .then((res) => {
-        console.log('res', res);
+        console.log(res)
+      })
+      .catch((err) => {
+        console.log('err', err)
+      })
+  }
+
+  fetchUsers() {
+    axios.get('http://localhost:8000/users')
+      .then((res) => {
+        if (res.data) {
+          console.log(res.data, this)
+          this.setState({
+            usersOnline: res.data,
+          });
+        }
       })
       .catch((err) => {
         console.log('err', err)
@@ -47,9 +67,9 @@ class App extends Component {
     return (
       <div className="App">
         <div className="top-bar">Feathers Chat
-          <button onClick={this.handleClick}>handleClick</button>
+          <button onClick={this.onClick}>Test</button>
         </div>
-        <UserList usersOnline={this.state.usersOnline}/>
+        <UserList usersOnline={this.state.usersOnline} />
         <ChatBox messages={this.state.messages}/>
       </div>
     );

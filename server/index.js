@@ -118,22 +118,26 @@ app.post('/signup', (req, res) => {
 });
 
 // comment this middleware out during development
-// app.use((req, res, next) => {
-//   if (req.cookies.sessID && sessions[req.cookies.username] === req.cookies.sessID) {
-//     next();
-//   } else {
-//     res.clearCookie('username');
-//     res.clearCookie('sessID');
-//     res.redirect('/');
-//   }
-// });
+app.use((req, res, next) => {
+  if (req.cookies.sessID && sessions[req.cookies.username] === req.cookies.sessID) {
+    next();
+  } else {
+    res.clearCookie('username');
+    res.clearCookie('sessID');
+    res.redirect('/');
+  }
+});
 
 app.use(express.static(path.join(__dirname, '../client/build')));
 
 app.post('/message', (req, res) => {
   pusher.trigger('message-channel', 'message-event', {
-    message: 'carter message',
-    senderUsername: 'carter'
+    message: 'Hi, everyoneasdfasddsfasfffdsafdsa!',
+    senderUsername: 'Carter'
   });
-  res.send('hi')
+  res.end()
 });
+
+app.get('/users', (req, res) => {
+  res.send(Object.keys(sessions))
+})

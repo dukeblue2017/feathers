@@ -8,8 +8,12 @@ class UserList extends Component {
   render() {
     return (
       <div className="user-list">
+        <div className="header">
+          <div className="green-number">{this.props.usersOnline.length}</div>
+          users
+        </div>
         {this.props.usersOnline.map((username, index) => {
-          return <div key={index}>{username}</div>
+          return <div className="user-list-entry" key={index}>{username}</div>
         })}
       </div>
     );
