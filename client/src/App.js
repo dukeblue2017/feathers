@@ -4,6 +4,7 @@ import axios from 'axios';
 import UserList from './UserList';
 import ChatBox from './ChatBox';
 import ChatInput from './ChatInput';
+import SignOut from './SignOut';
 import './App.css';
 
 class App extends Component {
@@ -17,6 +18,7 @@ class App extends Component {
     this.fetchUsers = this.fetchUsers.bind(this);
     this.fetchMessages = this.fetchMessages.bind(this);
     this.fetchMyUsername = this.fetchMyUsername.bind(this);
+    this.handleSignOutClick = this.handleSignOutClick.bind(this);
   }
 
   componentDidMount() {
@@ -77,13 +79,25 @@ class App extends Component {
       })
   }
 
+  handleSignOutClick() {
+    axios.post('http://localhost:8000/signout')
+      .then((res) => {
+        window.location.reload();
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }
+
   render() {
     return (
       <div className="App">
-        <div className="top-bar">Feathers Chat
+        <div className="top-bar">Feathers Chat<br/>
+          {this.state.myUsername && <div>Welcome, {this.state.myUsername}!</div>}
         </div>
         <UserList usersOnline={this.state.usersOnline} />
         <ChatBox messages={this.state.messages} myUsername={this.state.myUsername}/>
+        <SignOut handleSignOutClick={this.handleSignOutClick}/>
         <ChatInput />
       </div>
     );

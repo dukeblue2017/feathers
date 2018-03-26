@@ -33,7 +33,7 @@ app.get('/', (req, res) => {
     res.redirect('/index.html');
     pusher.trigger('user-channel', 'user-event', {
       userNowOnline: req.cookies.username,
-  });
+    });
   } else {
     res.redirect('/login');
   }
@@ -154,15 +154,25 @@ app.post('/message', (req, res) => {
   })
     .then()
     .catch((err) => {
-      console.log(err)
-    })
-  res.end()
+      console.log(err);
+    });
+  res.end();
 });
 
 app.get('/users', (req, res) => {
   res.send(Object.keys(sessions));
-})
+});
 
 app.get('/myUsername', (req, res) => {
   res.send(req.cookies.username);
-})
+});
+
+app.post('/signout', (req, res) => {
+  pusher.trigger('user-channel', 'user-event', {
+      userNowOffline: req.cookies.username,
+    });
+  delete sessions[req.cookies.username];
+  res.clearCookie('username');
+  res.clearCookie('sessID');
+  res.redirect('/');
+});

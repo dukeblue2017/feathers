@@ -15,7 +15,7 @@
   width: 40%;
   min-width: 200px;
   max-width: 400px;
-  background-color: lightgreen;
+  background-color: MediumAquaMarine;
 }
 
 .login label {
@@ -31,16 +31,22 @@
   font-size: 2em;
   grid-row: 1;
   grid-column: 1/3;
-  border-top: 1px solid lightgrey;
-  border-bottom: 1px solid lightgrey;
-  padding-top: .8em;
+  border-top: 1px solid lightgray;
+  border-bottom: 1px solid lightgray;
+  padding-top: .4em;
+}
+
+.top-bar div {
+  font-size: .7em;
+  padding-top: 10px;
+  padding-bottom: 10px;
 }
 
 .user-list {
   font-size: 2em;
-  grid-row: 2/4;
+  grid-row: 2/3;
   grid-column: 1;
-  border-right: 1px solid lightgrey;
+  border-right: 1px solid lightgray;
 }
 
 .user-list .header {
@@ -54,7 +60,7 @@
 }
 
 .user-list .green-number {
-  color: lightgreen;
+  color: MediumAquaMarine;
   display: inline;
   padding-right: .6em;
 }
@@ -88,6 +94,18 @@
 
 .message .message-username {
   font-size: .7em;
+}
+
+.sign-out {
+  border-right: 1px solid lightgray;
+}
+
+.sign-out button, .chat-input input {
+  color: white;
+  background-color: MediumAquaMarine;
+  font-size: 1.3em;
+  border-radius: 5px;
+  padding: .5em;
 }
 
 .chat-input {
