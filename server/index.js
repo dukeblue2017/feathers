@@ -121,21 +121,23 @@ app.post('/signup', (req, res) => {
     });
 });
 
-app.use((req, res, next) => {
-  if (req.cookies.sessID && sessions[req.cookies.username] === req.cookies.sessID) {
-    next();
-  } else {
-    res.clearCookie('username');
-    res.clearCookie('sessID');
-    res.redirect('/');
-  }
-});
+// comment this middleware out during development
+// app.use((req, res, next) => {
+//   if (req.cookies.sessID && sessions[req.cookies.username] === req.cookies.sessID) {
+//     next();
+//   } else {
+//     res.clearCookie('username');
+//     res.clearCookie('sessID');
+//     res.redirect('/');
+//   }
+// });
 
 app.use(express.static(path.join(__dirname, '../client/build')));
 
 app.post('/message', (req, res) => {
-  console.log('req', req);
-  pusher.trigger('carter-channel', 'carter-event', {
+  pusher.trigger('message-channel', 'message-event', {
     message: 'carter message',
+    senderUsername: 'carter'
   });
+  res.send('hi')
 });
