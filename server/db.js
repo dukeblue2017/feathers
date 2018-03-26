@@ -27,4 +27,15 @@ db.fetchHash = (username) => {
   return knex('users').select('hash').where({ username });
 };
 
+db.fetchMessages = () => {
+  return knex('messages').select().orderBy('date');
+};
+
+db.saveMessage = (messageObj) => {
+  return knex('messages').insert({
+    message: messageObj.message,
+    username: messageObj.username
+  });
+};
+
 module.exports = db;

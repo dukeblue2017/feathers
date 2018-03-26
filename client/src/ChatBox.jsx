@@ -9,14 +9,26 @@ class ChatBox extends Component {
   render() {
     return (
       <div className="chat-box">
-        {this.props.messages.map((message, index) => { return (
-          <div className="message-container" key={index}>
-            <div className="message">
-              <div className="message-username">{message.senderUsername}</div>
-              <div>{message.message}</div>
-            </div>
-          </div>
-        );
+        {Array.isArray(this.props.messages) && this.props.messages.map((message, index) => {
+          if (message.username === this.props.myUsername) {
+            return (
+              <div className="message-container-right" key={index}>
+                <div className="message">
+                  <div className="message-username">{message.username} {message.date && message.date.split('T').join(' ').split('.000Z').join('')}</div>
+                  <div>{message.message}</div>
+                </div>
+              </div>
+            );
+          } else {
+            return (
+              <div className="message-container-left" key={index}>
+                <div className="message">
+                  <div className="message-username">{message.username} {message.date && message.date.split('T').join(' ').split('.000Z').join('')}</div>
+                  <div>{message.message}</div>
+                </div>
+              </div>
+            );
+          }
       })}
       </div>
     );

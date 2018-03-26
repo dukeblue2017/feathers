@@ -12,45 +12,43 @@ class App extends Component {
     this.state = {
       messages: [],
       usersOnline: [],
+      myUsername: '',
     };
     this.fetchUsers = this.fetchUsers.bind(this);
     this.fetchMessages = this.fetchMessages.bind(this);
-    this.onClick = this.onClick.bind(this);
+    this.fetchMyUsername = this.fetchMyUsername.bind(this);
   }
 
   componentDidMount() {
     const pusher = new Pusher('e9b17ff5257c689f876c', {
       cluster: 'us2',
-      encrypted: true
+      encrypted: true,
     });
     const channel = pusher.subscribe('message-channel');
     channel.bind('message-event', (data) => {
       this.setState({
         messages: this.state.messages.concat(data),
-      })
+      });
     });
     const channelTwo = pusher.subscribe('user-channel');
     channelTwo.bind('user-event', (data) => {
-      console.log('data', data)
-      this.setState({
-        usersOnline: this.state.usersOnline.concat(data.userNowOnline),
-      })
+      this.fetchUsers()
     });
     this.fetchUsers();
-  }
-
-
-  onClick() {
+    this.fetchMessages();
+    this.fetchMyUsername();
   }
 
   fetchMessages() {
-    axios.post('http://localhost:8000/messages')
+    axios.get('http://localhost:8000/message')
       .then((res) => {
-        console.log(res)
+        this.setState({
+          messages: res.data,
+        })
       })
       .catch((err) => {
-        console.log('err', err)
-      })
+        console.log(err);
+      });
   }
 
   fetchUsers() {
@@ -63,7 +61,19 @@ class App extends Component {
         }
       })
       .catch((err) => {
-        console.log('err', err)
+        console.log('err', err);
+      });
+  }
+
+  fetchMyUsername() {
+    axios.get('http://localhost:8000/myUsername')
+      .then((res) => {
+        this.setState({
+          myUsername: res.data,
+        })
+      })
+      .catch((err) => {
+        console.log(err);
       })
   }
 
@@ -71,10 +81,9 @@ class App extends Component {
     return (
       <div className="App">
         <div className="top-bar">Feathers Chat
-          <button onClick={this.onClick}>Test</button>
         </div>
         <UserList usersOnline={this.state.usersOnline} />
-        <ChatBox messages={this.state.messages}/>
+        <ChatBox messages={this.state.messages} myUsername={this.state.myUsername}/>
         <ChatInput />
       </div>
     );

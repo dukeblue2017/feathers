@@ -22,6 +22,14 @@ class ChatInput extends Component {
     axios.post('http://localhost:8000/message', {
       message: this.state.value,
     })
+      .then((res) => {
+        this.setState({
+          value: '',
+        })
+      })
+      .catch((err) => {
+        console.log(err)
+      })
     e.preventDefault();
   }
 

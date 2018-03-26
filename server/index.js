@@ -133,14 +133,36 @@ app.use((req, res, next) => {
 
 app.use(express.static(path.join(__dirname, '../client/build')));
 
+app.get('/message', (req, res) => {
+  db.fetchMessages()
+    .then((DBres) => {
+      res.send(DBres)
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+});
+
 app.post('/message', (req, res) => {
   pusher.trigger('message-channel', 'message-event', {
     message: req.body.message,
-    senderUsername: req.cookies.username,
+    username: req.cookies.username,
   });
+  db.saveMessage({
+    message: req.body.message,
+    username: req.cookies.username,
+  })
+    .then()
+    .catch((err) => {
+      console.log(err)
+    })
   res.end()
 });
 
 app.get('/users', (req, res) => {
-  res.send(Object.keys(sessions))
+  res.send(Object.keys(sessions));
+})
+
+app.get('/myUsername', (req, res) => {
+  res.send(req.cookies.username);
 })
